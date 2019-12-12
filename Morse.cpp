@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define NDEBUG
+
 class MorseMachine {
   public:
     MorseMachine(string morse_file_path) {
@@ -31,8 +33,8 @@ class MorseMachine {
       string encoded = "";
       map<string,string>::iterator it;
       for (char& c : plaintext) {
-        it = this->morse_map.find(string(1, c));
-        if (it != this->morse_map.end()) {
+        it = this->encode_map.find(string(1, c));
+        if (it != this->encode_map.end()) {
           #ifndef NDEBUG
           cout << "Encoding: " << c << " as " << it->second << endl;
           #endif
@@ -77,9 +79,13 @@ class MorseMachine {
     map<string, string> decode_map;
 };
 
-int main() {
+int main(int argc, char **argv) {
   MorseMachine mm = MorseMachine("morse.txt");
-  string test_plaintext = "asdf asdf asdf";
+  string test_plaintext;
+  if (argc > 1)
+    test_plaintext = argv[1];
+  else
+    test_plaintext = "asdfbtuisuydfg";
   cout << "Test string: " << test_plaintext << endl;
   string encoded = mm.encode(test_plaintext);
   cout << "Encoded test string: " << encoded << endl;

@@ -29,6 +29,8 @@ class MorseMachine {
       morsefile.close();
     }
     
+    // Big O is O(n), n being the number of characters we need to encode
+    // Map size stays static so searching it is O(1)
     string encode(string plaintext) {
       string encoded = "";
       map<string,string>::iterator it;
